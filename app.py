@@ -14,7 +14,7 @@ model = None
 def load_model():
     global model
     import tf_keras as keras
-    MODEL_PATH = os.path.join(os.path.dirname(__file__), 'pcb_defect_model.h5')
+   MODEL_PATH = os.path.join(os.path.dirname(__file__), 'pcb_model_v2.keras')
     model = keras.models.load_model(MODEL_PATH, compile=False)
     print("✅ Model loaded!")
 
