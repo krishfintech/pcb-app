@@ -1,9 +1,7 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-import os
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
-import tensorflow as tf
-from tensorflow import keras
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 from flask import Flask, request, jsonify, render_template
 import numpy as np
 from PIL import Image
@@ -11,9 +9,14 @@ import io
 
 app = Flask(__name__)
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'pcb_defect_model.h5')
-model = keras.models.load_model(MODEL_PATH, compile=False)
-print("✅ Model loaded!")
+model = None
+
+def load_model():
+    global model
+    import tf_keras as keras
+    MODEL_PATH = os.path.join(os.path.dirname(__file__), 'pcb_defect_model.h5')
+    model = keras.models.load_model(MODEL_PATH, compile=False)
+    print("✅ Model loaded!")
 
 @app.route('/')
 def index():
@@ -41,5 +44,8 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
+    load_model()
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
+load_model()
