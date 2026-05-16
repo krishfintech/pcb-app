@@ -1,5 +1,6 @@
 flask==3.0.0
-tensorflow-cpu
-numpy
-Pillow
-gunicorn
+numpy==1.26.4
+Pillow==10.2.0
+gunicorn==21.2.0
+tf-keras
+tensorflow==2.14.0
